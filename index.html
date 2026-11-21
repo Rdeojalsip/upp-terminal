@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password: GcM</title>
+
+  <!-- 디스코드 링크 미리보기(OG 태그) -->
+  <meta property="og:title" content="SYSTEM // U.P.P. TERMINAL" />
+  <meta property="og:description" content="Enter the password to access Accesscode.txt." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --bg: #070b08;
+      --panel: #0c140e;
+      --phosphor: #39ff7a;
+      --phosphor-dim: #1c8c42;
+      --warn: #ff4d4d;
+      --muted: #7c9483;
+      --border: rgba(57, 255, 122, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background-color: var(--bg);
+      color: var(--phosphor);
+      font-family: "Courier New", Courier, "Consolas", monospace;
+      overflow-x: hidden;
+    }
+
+    /* 90년대 CRT 스캔라인 & 비네트 효과 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.32) 3px,
+        rgba(0, 0, 0, 0.32) 4px
+      );
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      box-shadow: inset 0 0 110px rgba(0, 0, 0, 0.85);
+      pointer-events: none;
+      z-index: 11;
+    }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 36px 18px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .terminal {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      box-shadow: 0 0 30px rgba(57, 255, 122, 0.08);
+      border-radius: 6px;
+      padding: 24px 22px;
+      text-shadow: 0 0 8px rgba(57, 255, 122, 0.35);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .topbar strong {
+      color: var(--phosphor);
+    }
+
+    .boot-log {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--phosphor-dim);
+      margin-bottom: 20px;
+      min-height: 78px;
+    }
+
+    .boot-log .ok {
+      color: var(--phosphor);
+    }
+
+    .mission-box {
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.35);
+      padding: 18px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 3px 8px;
+      border: 1px solid rgba(255, 77, 77, 0.5);
+      color: var(--warn);
+      text-shadow: none;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    .desc {
+      margin: 0;
+      color: #c7e8d2;
+      font-size: 15px;
+      line-height: 1.65;
+      text-shadow: none;
+    }
+
+    .file-badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 12px;
+      background: rgba(57, 255, 122, 0.1);
+      border: 1px solid var(--phosphor);
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    input[type="password"],
+    input[type="text"] {
+      flex: 1 1 260px;
+      background: #050806;
+      border: 1px solid var(--phosphor-dim);
+      color: var(--phosphor);
+      font-family: inherit;
+      font-size: 15px;
+      padding: 12px 14px;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--phosphor);
+      box-shadow: 0 0 10px rgba(57, 255, 122, 0.25);
+    }
+
+    button {
+      background: rgba(57, 255, 122, 0.12);
+      border: 1px solid var(--phosphor);
+      color: var(--phosphor);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 12px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    button:hover {
+      background: rgba(57, 255, 122, 0.24);
+    }
+
+    .feedback {
+      margin-top: 14px;
+      min-height: 24px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .err {
+      color: var(--warn);
+      text-shadow: 0 0 8px rgba(255, 77, 77, 0.35);
+    }
+
+    .file-viewer {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid var(--phosphor);
+      background: rgba(57, 255, 122, 0.07);
+      border-radius: 4px;
+      display: none;
+    }
+
+    .file-viewer.show {
+      display: block;
+    }
+
+    .file-header {
+      font-size: 13px;
+      color: var(--muted);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .file-content {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #e4ffed;
+      text-shadow: none;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 9px;
+      height: 16px;
+      background: var(--phosphor);
+      vertical-align: middle;
+      margin-left: 4px;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .shake {
+      animation: shake 0.28s linear;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="terminal" id="terminal">
+      <div class="topbar">
+        <span>NODE: <strong>UPP-SRV-99</strong></span>
+        <span>FILE: <strong>Accesscode.txt</strong></span>
+        <span>STATUS: <strong id="statusText" style="color: var(--warn);">LOCKED</strong></span>
+      </div>
+
+      <div class="boot-log" id="bootLog"></div>
+
+      <section class="mission-box">
+        <span class="tag">PROTECTED FILE</span>
+        <h1>ACCESS REQUIRED</h1>
+        <p class="desc">
+          Enter the password to access <strong>Accesscode.txt</strong>.
+        </p>
+        <div class="file-badge">TARGET : ./Accesscode.txt</div>
+      </section>
+
+      <form id="pwForm" autocomplete="off">
+        <div class="controls">
+          <input
+            type="text"
+            id="pwInput"
+            placeholder="Enter password..."
+            aria-label="Password"
+          />
+          <button type="submit">UNLOCK</button>
+        </div>
+      </form>
+
+      <div class="feedback" id="feedback"></div>
+
+      <section class="file-viewer" id="fileViewer">
+        <div class="file-header">
+          <span>[DECODED] ./Accesscode.txt</span>
+          <span>READ-ONLY<span class="cursor"></span></span>
+        </div>
+        <pre class="file-content" id="fileContent">Loading...</pre>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const bootLines = [
+      "Initializing memory check... <span class='ok'>OK</span>",
+      "Mounting local directory ./... <span class='ok'>MOUNTED</span>",
+      "Target file detected: <span class='ok'>Accesscode.txt</span> (Base64 Encoded)"
+    ];
+
+    const bootLogEl = document.getElementById("bootLog");
+    bootLines.forEach((line, idx) => {
+      setTimeout(() => {
+        const div = document.createElement("div");
+        div.innerHTML = line;
+        bootLogEl.appendChild(div);
+      }, idx * 300);
+    });
+
+    // Base64 (UTF-8 지원) 디코더 모듈
+    function decodeBase64Utf8(base64Str) {
+      const cleaned = base64Str.replace(/\s+/g, "");
+      const binaryStr = atob(cleaned);
+      const bytes = new Uint8Array(binaryStr.length);
+      for (let i = 0; i < binaryStr.length; i++) {
+        bytes[i] = binaryStr.charCodeAt(i);
+      }
+      return new TextDecoder("utf-8").decode(bytes);
+    }
+
+    const form = document.getElementById("pwForm");
+    const input = document.getElementById("pwInput");
+    const feedback = document.getElementById("feedback");
+    const fileViewer = document.getElementById("fileViewer");
+    const fileContent = document.getElementById("fileContent");
+    const statusText = document.getElementById("statusText");
+    const terminal = document.getElementById("terminal");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const entered = input.value.trim();
+
+      if (!entered) {
+        feedback.innerHTML = "<span class='err'>[ERR] Password cannot be empty.</span>";
+        return;
+      }
+
+      if (entered === "GcM") {
+        feedback.innerHTML = "<span class='ok'>[ACCESS GRANTED] Decrypting Accesscode.txt...</span>";
+        statusText.textContent = "UNLOCKED";
+        statusText.style.color = "var(--phosphor)";
+        input.disabled = true;
+        fileViewer.classList.add("show");
+
+        try {
+          const res = await fetch("./Accesscode.txt", { cache: "no-store" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          const encodedText = await res.text();
+          fileContent.textContent = decodeBase64Utf8(encodedText);
+        } catch (err) {
+          fileContent.textContent = "[ERROR] Failed to decode Accesscode.txt (" + err.message + ")";
+        }
+      } else {
+        feedback.innerHTML = "<span class='err'>[ACCESS DENIED] Incorrect password.</span>";
+        terminal.classList.remove("shake");
+        void terminal.offsetWidth;
+        terminal.classList.add("shake");
+      }
+    });
+  </script>
+</body>
+</html>
